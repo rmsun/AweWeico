@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@drawable/login_bg" android:scaleType="centerCrop" />
+    <ImageView android:id="@id/login_image" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/ebpay_dimen_20dp" android:layout_marginTop="50.0dip" android:src="@drawable/login_logo" />
+    <TextView android:textSize="16.0sp" android:textColor="#ff1575f9" android:gravity="center" android:layout_gravity="bottom|center" android:id="@id/sso_button" android:background="@drawable/login_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="80.0dip" android:text="@string/sina_weibo_login" />
+    <TextView android:textSize="16.0sp" android:textColor="#ff1575f9" android:layout_gravity="bottom|center" android:id="@id/registered_button" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="38.0dip" android:text="@string/registration_sina_account" />
+    <TextView android:textSize="12.0sp" android:textColor="#ffaaaaaa" android:layout_gravity="bottom|center" android:id="@id/forget_pwd" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="13.0dip" android:text="@string/forgot_pwd" />
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:id="@+id/webView"/>
+</FrameLayout>
