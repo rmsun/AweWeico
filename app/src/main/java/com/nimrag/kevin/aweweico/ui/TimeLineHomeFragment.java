@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nimrag.kevin.aweweico.R;
+import com.nimrag.kevin.aweweico.lib.CircleImageTransformation;
+import com.nimrag.kevin.aweweico.lib.Logger;
 import com.nimrag.kevin.aweweico.sinasdk.bean.FriendsTimeLine;
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +63,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 TextView editText = holder.getView(R.id.weibo_content);
 
                 //加载图片
-                Picasso.with(getActivity().getApplicationContext()).load(data.getProfileImageUrl()).resize(150, 150).into(imageView);
+                Picasso.with(getActivity().getApplicationContext()).load(data.getProfileImageUrl()).transform(new CircleImageTransformation()).resize(150, 150).into(imageView);
                 screenName.setText(data.getScreenName());
                 editText.setText(data.getText());
             }
@@ -92,6 +94,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
 
     @Override
     public void onRefreshData(FriendsTimeLine data) {
+        Logger.d("TimeLineHomeFragment", "onRefreshData");
         mSwipeRefreshLayout.setRefreshing(false);
         if (data != null) {
             List<FriendsTimeLine.StatusesBean> status = data.getStatuses();

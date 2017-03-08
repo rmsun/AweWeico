@@ -46,7 +46,6 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
             mHeaderView = viewHolder.getContentView();
         } else if (viewType == ITEM_TYPE.FOOTER.ordinal()) {
             mFooterView = viewHolder.getContentView();
-            Log.d("haha", "footView height = " + mFooterView.getHeight());
         }
         return viewHolder;
     }
@@ -69,7 +68,6 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        //Log.d("haha", "onBindViewHolder itemCount = " + getItemCount());
         if(position == 0 && mHasHeader) {
             return;
         } else if (position == getItemCount() - 1 && mHasFooter) {

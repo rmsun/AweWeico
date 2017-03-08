@@ -66,10 +66,8 @@ public class LoginPresenter implements ILoginPresenter {
 
         @Override
         protected void onPostExecute(UserInfo info) {
-            //Log.d("haha", "uid = "+info.getUid()+" access_token = "+info.getAccessToken()+" expire_in = "+info.getExpiresIn());
             if(info.getUid() != null) {
                 mView.onLoginResult(true, info);
-                //AppContext.setUserInfo(info);
             } else {
                 mView.onLoginResult(false, null);
             }

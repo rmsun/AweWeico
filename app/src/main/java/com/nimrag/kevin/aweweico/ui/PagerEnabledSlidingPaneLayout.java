@@ -31,7 +31,6 @@ public class PagerEnabledSlidingPaneLayout extends SlidingPaneLayout {
 
         ViewConfiguration config = ViewConfiguration.get(context);
         mEdgeSlop = config.getScaledEdgeSlop();
-        Log.d("haha", "mEdgeSlop = " + mEdgeSlop);
     }
 
     @Override
