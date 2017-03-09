@@ -9,7 +9,6 @@ import com.nimrag.kevin.aweweico.lib.orm.annotation.AutoIncrementPrimaryKey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
