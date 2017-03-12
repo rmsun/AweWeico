@@ -20,12 +20,18 @@ public class TableColumn {
     /**
      * 列名
      */
-    private String column;
+    private String columnName;
     /**
      * 列中对应数据的类型
      */
     private String columnType;
 
     public String getDataType() { return dataType; }
+    public Field getField() { return field; }
+    public String getColumnName() { return columnName; }
+    public String getColumnType() { return columnType; }
     public void setDataType(String dataType) { this.dataType = dataType; }
+    public void setField(Field field) { this.field = field; }
+    public void setColumnName(String columnName) { this.columnName = columnName; }
+    public void setColumnType(String columnType) { this.columnType = columnType; }
 }

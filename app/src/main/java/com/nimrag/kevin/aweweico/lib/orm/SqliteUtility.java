@@ -9,6 +9,10 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.nimrag.kevin.aweweico.lib.orm.annotation.AutoIncrementPrimaryKey;
 import com.nimrag.kevin.aweweico.lib.orm.extra.Extra;
+import com.nimrag.kevin.aweweico.lib.orm.extra.TableColumn;
+import com.nimrag.kevin.aweweico.lib.orm.extra.TableInfo;
+import com.nimrag.kevin.aweweico.lib.orm.utils.SqlUtils;
+import com.nimrag.kevin.aweweico.lib.orm.utils.TableInfoUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -52,9 +56,9 @@ public class SqliteUtility {
      */
     public <T> T selecById(Extra extra, Class<T> clazz, Object id) {
         try {
-            TableInfo tableInfo = checkTableInfo(clazz);
+            TableInfo tableInfo = checkTable(clazz);
 
-            String selection = String.format(" %s = ? ", tableInfo.getPrimaryKey().getColumn());
+            String selection = String.format(" %s = ? ", tableInfo.getPrimaryKey().getColumnName());
             String extraSelection = SqlUtils.appendExtraWhereClause(extra);
             if (!TextUtils.isEmpty(extraSelection)) {
                 selection = String.format("%s and %s", selection, extraSelection);
@@ -84,8 +88,8 @@ public class SqliteUtility {
      *  @return 数据映射对象
      */
     public <T> List<T> select(Extra extra, Class<T> clazz) {
-        String selection = SqlitUtils.appendExtraWhereClause(extra);
-        String[] selectionArgs = SqliteUtils.appExtraWhereClauseArgs(extra);
+        String selection = SqlUtils.appendExtraWhereClause(extra);
+        String[] selectionArgs = SqlUtils.appendExtraWhereArgs(extra);
 
         return select(clazz, selection, selectionArgs, null, null, null, null);
     }
@@ -106,9 +110,9 @@ public class SqliteUtility {
 
         ArrayList<T> list = new ArrayList<T>();
         List<String> columnList = new ArrayList<String>();
-        columnList.add(tableInfo.getPrimaryKey().getColumn());
-        for (TableColumn tableColumn : tableInfo.getColumn) {
-            columnList.add(tableColumn.getColumn());
+        columnList.add(tableInfo.getPrimaryKey().getColumnName());
+        for (TableColumn tableColumn : tableInfo.getColumns()) {
+            columnList.add(tableColumn.getColumnName());
         }
 
         Cursor cursor = db.query(tableInfo.getTableName(), columnList.toArray(new String[0]), selection, selectionArgs, groupBy, having, orderBy, limit);
@@ -120,7 +124,7 @@ public class SqliteUtility {
                         // 绑定主键
                         bindSelectValue(entity, cursor, tableInfo.getPrimaryKey());
                         // 绑定除主键外的其他数据
-                        for (TableColumn column : tableInfo.getColumn()) {
+                        for (TableColumn column : tableInfo.getColumns()) {
                             bindSelectValue(entity, cursor, column);
                         }
                         list.add(entity);
@@ -153,7 +157,7 @@ public class SqliteUtility {
 
     public <T> void insert(Extra extra, List<T> entityList) {
         try {
-            insert(extra, entityList, "INSERT OR IGNORE INFO");
+            insert(extra, entityList, "INSERT OR IGNORE INTO");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -162,7 +166,7 @@ public class SqliteUtility {
     public <T> void insertOrReplace(Extra extra, T... entities) {
         try {
             if (entities != null && entities.length > 0) {
-                insert(extra, Arrays.asList(entities), "INSERT OR REPLACE INFO");
+                insert(extra, Arrays.asList(entities), "INSERT OR REPLACE INTO");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,7 +175,7 @@ public class SqliteUtility {
 
     public <T> void insertOrReplace(Extra extra, List<T> entityList) {
         try {
-            insert(extra, entityList, "INSERT OR REPLACE INFO");
+            insert(extra, entityList, "INSERT OR REPLACE INTO");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -181,9 +185,9 @@ public class SqliteUtility {
      * insert方法
      * @param extra
      * @param entityList 插入数据对应的对象
-     * @param insertInfo 额外信息，用与判断存在主键实体时要ignore还是replace
+     * @param insertInto 额外信息，用与判断存在主键实体时要ignore还是replace
      */
-    public <T> void insert(Extra extra, List<T> entityList, String insertInfo) {
+    public <T> void insert(Extra extra, List<T> entityList, String insertInto) {
         if (entityList == null || entityList.size() == 0) {
             return;
         }
@@ -192,10 +196,10 @@ public class SqliteUtility {
         synchronized (tableInfo) {
             db.beginTransaction();
             try {
-                String sql = SqliteUtils.createSqlInsert(insertInfo, tableInfo);
+                String sql = SqlUtils.createSqlInsert(insertInto, tableInfo);
                 SQLiteStatement insertStatement = db.compileStatement(sql);
                 for (T entity : entityList) {
-                    bindInsertValue(extra, insertStatement, tableInfo, entity);
+                    bindInsertValues(extra, insertStatement, tableInfo, entity);
                     insertStatement.execute();
                 }
                 db.setTransactionSuccessful();
@@ -206,7 +210,7 @@ public class SqliteUtility {
             if (entityList.size() == 1 && tableInfo.getPrimaryKey() instanceof AutoIncrementPrimaryKey) {
                 Cursor cursor = null;
                 try {
-                    cursor = db.rawQuery("select last_insert_rowid() from " + tabInfo.getTableName(), null);
+                    cursor = db.rawQuery("select last_insert_rowid() from " + tableInfo.getTableName(), null);
                     if (cursor.moveToFirst()) {
                         int newId = cursor.getInt(0);
                         T bean = entityList.get(0);
@@ -254,7 +258,7 @@ public class SqliteUtility {
                     T entity = entityList.get(i);
                     tableInfo.getPrimaryKey().getField().setAccessible(true);
                     Object id = tableInfo.getPrimaryKey().getField().get(entity);
-                    String whereClause = String.format(" %s = ? ", tableInfo.getPrimaryKey().getColumn());
+                    String whereClause = String.format(" %s = ? ", tableInfo.getPrimaryKey().getColumnName());
                     String extraSelection = SqlUtils.appendExtraWhereClause(extra);
                     if (!TextUtils.isEmpty(extraSelection)) {
                         whereClause = String.format("%s and %s", whereClause, extraSelection);
@@ -279,13 +283,15 @@ public class SqliteUtility {
         }
     }
 
-    public <T> void update(Class<T> clazz, ContentValues values, String whereClause, String[] whereArgs) {
+    public <T> int update(Class<T> clazz, ContentValues values, String whereClause, String[] whereArgs) {
         try {
             TableInfo tableInfo = checkTable(clazz);
-            return db.update(tableInfo.getTableName, values, whereClause, whereArgs);
+            return db.update(tableInfo.getTableName(), values, whereClause, whereArgs);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return 0;
     }
 
     /**
@@ -309,7 +315,7 @@ public class SqliteUtility {
     public <T> void deleteById(Extra extra, Class<T> clazz, Object id) {
         try {
             TableInfo tableInfo = checkTable(clazz);
-            String whereClause = String.format(" %s = ? ", tableInfo.getPrimaryKey().getColumn());
+            String whereClause = String.format(" %s = ? ", tableInfo.getPrimaryKey().getColumnName());
             String extraWhereClause = SqlUtils.appendExtraWhereClause(extra);
             if (!TextUtils.isEmpty(extraWhereClause)) {
                 whereClause = String.format("%s and %s", whereClause, extraWhereClause);
@@ -397,51 +403,122 @@ public class SqliteUtility {
      * bindSelectValue方法,根据数据库返回的value，初始化映射对象
      * @param entity 映射对象
      * @param cursor 数据库cursor
-     * @param TableColumn 列信息
+     * @param column 列信息
      */
-    public <T> void bindSelecValue(T entity, Cursor cursor, TableColumn column) {
+    public <T> void bindSelectValue(T entity, Cursor cursor, TableColumn column) {
         Field field = column.getField();
         field.setAccessible(true);
 
         try {
             if (field.getType().getName().equals("int") ||
                     field.getType().getName().equals("java.lang.Integer")) {
-                field.set(entity, cursor.getInt(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getInt(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("long") ||
                     field.getType().getName().equals("java.lang.Long")) {
-                field.set(entity, cursor.getLong(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getLong(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("float") ||
                     field.getType().getName().equals("java.lang.Float")) {
-                field.set(entity, cursor.getFloat(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getFloat(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("double") ||
                     field.getType().getName().equals("java.lang.Double")) {
-                field.set(entity, cursor.getDouble(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getDouble(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("boolean") ||
                     field.getType().getName().equals("java.lang.Boolean")) {
-                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("char") ||
                     field.getType().getName().equals("java.lang.Character")) {
-                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("byte") ||
                     field.getType().getName().equals("java.lang.Byte")) {
-                field.set(entity, cursor.getInt(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getInt(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("short") ||
                     field.getType().getName().equals("java.lang.Short")) {
-                field.set(entity, cursor.getShort(column.getColumn()));
+                field.set(entity, cursor.getShort(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("java.lang.String")) {
-                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("[B")) {
-                field.set(entity, cursor.getBlob(cursor.getColumnIndex(column.getColumn())));
+                field.set(entity, cursor.getBlob(cursor.getColumnIndex(column.getColumnName())));
             } else {
                 Gson gson = new Gson();
-                String text = cursor.getString(cursor.getColumnIndex(column.getColumin()));
-                try {
-                    field.set(entity, gson.fromJson(text, field.getGenericType()));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                String text = cursor.getString(cursor.getColumnIndex(column.getColumnName()));
+                field.set(entity, gson.fromJson(text, field.getGenericType()));
             }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * 绑定对象的属性到contentvalues
+     * @param values
+     * @param column
+     * @param entity 提供数据的对象
+     */
+    private <T> void bindValue(ContentValues values, TableColumn column, T entity) {
+        try {
+            column.getField().setAccessible(true);
+            Object value = column.getField().get(entity);
+            if (value == null) {
+                return;
+            }
+            if ("object".equalsIgnoreCase(column.getDataType())) {
+                Gson gson = new Gson();
+                values.put(column.getColumnName(), gson.toJson(value));
+            } else if ("INTEGER".equalsIgnoreCase(column.getColumnType())) {
+                values.put(column.getColumnName(), Long.parseLong(value.toString()));
+            } else if ("REAL".equalsIgnoreCase(column.getColumnType())) {
+                values.put(column.getColumnName(), Double.parseDouble(value.toString()));
+            } else if ("BLOB".equalsIgnoreCase(column.getColumnType())) {
+                values.put(column.getColumnName(), (byte[])value);
+            } else if ("TEXT".equalsIgnoreCase(column.getColumnType())) {
+                values.put(column.getColumnName(), value.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private <T> void bindValue(SQLiteStatement insertStatement, int index, TableColumn column, T entity) {
+        try {
+            column.getField().setAccessible(true);
+            Object value = column.getField().get(entity);
+            if (value == null) {
+                insertStatement.bindNull(index);
+                return;
+            }
+            if ("object".equalsIgnoreCase(column.getDataType())) {
+                Gson gson = new Gson();
+                insertStatement.bindString(index, gson.toJson(value));
+            } else if ("INTEGER".equalsIgnoreCase(column.getColumnType())) {
+                insertStatement.bindLong(index, Long.parseLong(value.toString()));
+            } else if ("REAL".equalsIgnoreCase(column.getColumnType())) {
+                insertStatement.bindDouble(index, Double.parseDouble(value.toString()));
+            } else if ("BLOB".equalsIgnoreCase(column.getColumnType())) {
+                insertStatement.bindBlob(index, (byte[])value);
+            } else if ("TEXT".equalsIgnoreCase(column.getColumnType())) {
+                insertStatement.bindString(index, value.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private <T> void bindInsertValues(Extra extra, SQLiteStatement insertStatement, TableInfo tableInfo, T entity) {
+        int index = 1;
+        if (tableInfo.getPrimaryKey() instanceof AutoIncrementPrimaryKey) {
+
+        } else {
+            bindValue(insertStatement, index++, tableInfo.getPrimaryKey(), entity);
+        }
+        for (int i = 0; i < tableInfo.getColumns().size(); i++) {
+            bindValue(insertStatement, index++, tableInfo.getColumns().get(i), entity);
+        }
+        String owner = extra == null || TextUtils.isEmpty(extra.getOwner()) ? "" : extra.getOwner();
+        insertStatement.bindString(index++, owner);
+        String key = extra == null || TextUtils.isEmpty(extra.getKey()) ? "" : extra.getKey();
+        insertStatement.bindString(index++, key);
+        long createAt = System.currentTimeMillis();
+        insertStatement.bindLong(index, createAt);
     }
 
     /**
