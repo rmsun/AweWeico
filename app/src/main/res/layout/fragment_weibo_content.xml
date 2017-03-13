@@ -3,6 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/profile_image"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,14 +25,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/weibo_content"
         android:layout_marginStart="28dp"
-        android:layout_below="@id/profile_image"
-        android:layout_toEndOf="@id/profile_image" />
+        android:layout_below="@id/screen_name"
+        android:layout_toEndOf="@id/profile_image"
+        android:autoLink="web"/>
 
-    <ImageView
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@id/profile_image"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+    <include android:id="+@image_layout" layout="@layout/nine_image_layout"/>
+
 </RelativeLayout>

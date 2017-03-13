@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by kevin on 2017/3/2.
+ * RecyclerView上拉监听
  */
 
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {

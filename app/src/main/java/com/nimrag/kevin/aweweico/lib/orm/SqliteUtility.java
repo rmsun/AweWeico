@@ -79,6 +79,8 @@ public class SqliteUtility {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
     /**
@@ -131,8 +133,8 @@ public class SqliteUtility {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-            } while (cursor.moveToNext());
+                } while (cursor.moveToNext());
+            }
         } finally {
             cursor.close();
         }
@@ -216,7 +218,7 @@ public class SqliteUtility {
                         T bean = entityList.get(0);
                         try {
                             tableInfo.getPrimaryKey().getField().setAccessible(true);
-                            tableInfo.getPrimaryKey().setField().set(bean, newId);
+                            tableInfo.getPrimaryKey().getField().set(bean, newId);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }

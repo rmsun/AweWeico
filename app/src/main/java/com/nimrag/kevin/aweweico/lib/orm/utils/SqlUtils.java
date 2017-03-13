@@ -105,6 +105,7 @@ public class SqlUtils {
                 builder.append('?');
             }
         }
+        return builder;
     }
 
     public static String appendExtraWhereClauseSql(Extra extra) {

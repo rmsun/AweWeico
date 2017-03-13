@@ -62,7 +62,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 TextView screenName = holder.getView(R.id.screen_name);
                 TextView editText = holder.getView(R.id.weibo_content);
 
-                //加载图片
+                // 加载图片
                 Picasso.with(getActivity().getApplicationContext()).load(data.getProfileImageUrl()).transform(new CircleImageTransformation()).resize(150, 150).into(imageView);
                 screenName.setText(data.getScreenName());
                 editText.setText(data.getText());
@@ -79,6 +79,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             public void onRefresh() {
                 if(!isRefresh) {
                     isRefresh = true;
+                    mTimeLinePresenter.refreshData();
                 }
             }
         });
@@ -92,10 +93,14 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         mTimeLinePresenter.refreshData();
     }
 
+    /**
+     * 下拉刷新
+     */
     @Override
     public void onRefreshData(FriendsTimeLine data) {
         Logger.d("TimeLineHomeFragment", "onRefreshData");
         mSwipeRefreshLayout.setRefreshing(false);
+        isRefresh = false;
         if (data != null) {
             List<FriendsTimeLine.StatusesBean> status = data.getStatuses();
             for (int i = 0; i < status.size(); i++) {
@@ -106,6 +111,9 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         }
     }
 
+    /**
+     * 加载更多
+     */
     @Override
     public void onLoadMoreData(FriendsTimeLine data) {
 
