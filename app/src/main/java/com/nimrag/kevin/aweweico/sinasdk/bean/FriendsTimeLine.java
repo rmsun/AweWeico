@@ -73,6 +73,26 @@ public class FriendsTimeLine {
         private String mid;
         private int reposts_count;
         private int comments_count;
+        /**
+         * 缩略图
+         */
+        private String thumbnail_pic;
+
+        /**
+         * 中型图片
+         */
+        private String bmiddle_pic;
+
+        /**
+         * 原始图片
+         */
+        private String original_pic;
+
+        /**
+         * 图片配图，多图时，返回多图链接
+         */
+        private List<picUrlsBean> pic_urls;
+
         private UserBean user;
 
         public String getCreated_at() {
@@ -178,6 +198,24 @@ public class FriendsTimeLine {
         public void setComments_count(int comments_count) {
             this.comments_count = comments_count;
         }
+
+        public String getThumbnail_pic() {return thumbnail_pic;}
+
+        public void setThumbnail_pic(String thumbnail_pic) {this.thumbnail_pic = thumbnail_pic;}
+
+        public String getBmiddle_pic() {return bmiddle_pic;}
+
+        public void setBmiddle_pic(String bmiddle_pic) {this.bmiddle_pic = bmiddle_pic;}
+
+        public String getOriginal_pic() {return original_pic;}
+
+        public void setOriginal_pic(String original_pic) {this.original_pic = original_pic;}
+
+        public List<picUrlsBean> getPic_urls() {
+            return pic_urls;
+        }
+
+        public void setPic_urls(List<picUrlsBean> pic_urls) {this.pic_urls = pic_urls;}
 
         public UserBean getUser() {
             return user;
@@ -488,5 +526,12 @@ public class FriendsTimeLine {
         public void setMark(String mark) {
             this.mark = mark;
         }
+    }
+
+    public static class picUrlsBean {
+        private String thumbnail_pic;
+
+        public String getThumbnail_pic() {return thumbnail_pic;}
+        public void setThumbnail_pic(String thumbnail_pic) {this.thumbnail_pic = thumbnail_pic;}
     }
 }

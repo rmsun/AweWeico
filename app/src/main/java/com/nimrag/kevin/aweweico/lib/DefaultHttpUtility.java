@@ -52,7 +52,8 @@ public class DefaultHttpUtility implements IHttpUtility {
     private <T> T parseResponse(Response response, Class<T> responseCls) {
         Gson gson = new Gson();
         try {
-            T responseObj = gson.fromJson(response.body().string(), responseCls);
+            String s = response.body().string();
+            T responseObj = gson.fromJson(s, responseCls);
             return responseObj;
         } catch (Exception e) {
             e.printStackTrace();

@@ -66,10 +66,12 @@ public class LoginPresenter implements ILoginPresenter {
 
         @Override
         protected void onPostExecute(UserInfo info) {
-            if(info.getUid() != null) {
-                mView.onLoginResult(true, info);
-            } else {
-                mView.onLoginResult(false, null);
+            if (info != null) {
+                if (info.getUid() != null) {
+                    mView.onLoginResult(true, info);
+                } else {
+                    mView.onLoginResult(false, null);
+                }
             }
         }
     }
