@@ -14,6 +14,11 @@ public class FriendsTimeLine {
      */
 
     private int total_number;
+    /**
+     * since_id max_id分别用于刷新和加载更多
+     */
+    private long since_id;
+    private long max_id;
     private List<StatusesBean> statuses;
     private List<AdBean> ad;
 
@@ -24,6 +29,14 @@ public class FriendsTimeLine {
     public void setTotal_number(int total_number) {
         this.total_number = total_number;
     }
+
+    public long getSince_id() {return since_id;}
+
+    public void setSince_id(long since_id) { this.since_id = since_id; }
+
+    public long getMax_id() { return max_id; }
+
+    public void setMax_id(long max_id) { this.max_id = max_id; }
 
     public List<StatusesBean> getStatuses() {
         return statuses;
