@@ -16,7 +16,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     private int totalItemCount;
     private int prevItemTotalCount;
 
-    public abstract void onLoadMoreData();
+    public abstract void loadMoreData();
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -32,13 +32,15 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
                 passedVisibleItemCount = layoutManager.findFirstCompletelyVisibleItemPosition();
                 currentVisibleItemCount = layoutManager.getChildCount();
                 totalItemCount = layoutManager.getItemCount();
+                // totalItemCount > prevItemTotalCount 说明加载已经完成
                 if (isLoading && totalItemCount > prevItemTotalCount) {
                     isLoading = false;
                     prevItemTotalCount = totalItemCount;
                 }
                 if (!isLoading && (currentVisibleItemCount + passedVisibleItemCount >= totalItemCount)) {
                     isLoading = true;
-                    onLoadMoreData();
+                    prevItemTotalCount = totalItemCount;
+                    loadMoreData();
                 }
             }
         }

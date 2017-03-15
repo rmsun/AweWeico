@@ -20,7 +20,7 @@ public class MainFragment extends Fragment {
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private static final int NUM_PAGES = 3;
+    private static final int NUM_PAGES = 1;
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 

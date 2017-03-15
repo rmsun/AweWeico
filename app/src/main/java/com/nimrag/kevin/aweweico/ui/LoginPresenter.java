@@ -6,7 +6,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.nimrag.kevin.aweweico.AppContext;
 import com.nimrag.kevin.aweweico.sinasdk.bean.UserInfo;
 import com.nimrag.kevin.aweweico.lib.Params;
 import com.nimrag.kevin.aweweico.lib.ParamsUtil;

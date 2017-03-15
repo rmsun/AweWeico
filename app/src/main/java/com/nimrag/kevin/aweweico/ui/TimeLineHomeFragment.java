@@ -49,7 +49,8 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         mRecycleView = (RecyclerView) rootView.findViewById(android.R.id.list);
         mRecycleView.addOnScrollListener(new EndlessScrollListener() {
             @Override
-            public void onLoadMoreData() {
+            public void loadMoreData() {
+                mTimeLinePresenter.loadMoreData();
             }
         });
 
@@ -81,7 +82,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                  * 1张图片,一行一列,保持图片的宽高比例
                  * 2/4张图片,两行两列
                  * 3/5/6/7/8/9 三列
-                 * 优化:自定义控件实现
+                 * 优化:自定义控件实现，移动网络下使用缩略图，wifi下使用中图
                  */
                 loadTimeLineImage(imageGridLayout, status.getPic_urls());
             }
@@ -140,7 +141,8 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
      */
     @Override
     public void onLoadMoreData(FriendsTimeLine data) {
-
+        statusContent.addAll(data.getStatuses());
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -161,18 +163,18 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         // 图片为1张时，保持原图的宽高比
         if (imageSize == 1) {
             NormalBitmapTarget target = new NormalBitmapTarget(gridLayout);
-            Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(0).getThumbnail_pic()).placeholder(R.drawable.image_for_test_dong).into(target);
+            Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(0).getThumbnail_pic()).placeholder(R.drawable.place_holder).into(target);
         } else if (imageSize == 2 || imageSize ==4) {
             gridLayout.setColumnCount(2);
             for (int i = 0; i < imageSize; i++) {
                 SquareBitmapTarget target = new SquareBitmapTarget(gridLayout, i);
-                Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(i).getThumbnail_pic()).placeholder(R.drawable.image_for_test_dong).into(target);
+                Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(i).getThumbnail_pic()).placeholder(R.drawable.place_holder).into(target);
             }
         } else {
             gridLayout.setColumnCount(3);
             for (int i = 0; i < imageSize; i++) {
                 SquareBitmapTarget target = new SquareBitmapTarget(gridLayout, i);
-                Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(i).getThumbnail_pic()).placeholder(R.drawable.image_for_test_dong).into(target);
+                Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(i).getThumbnail_pic()).placeholder(R.drawable.place_holder).into(target);
             }
         }
     }
@@ -195,11 +197,13 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             int height = bitmap.getHeight();
             int cellWidth = (int)Math.round(width * 4);
             int cellHeight = (int)Math.round(height * 4);
+
             GridLayout.Spec rowSpec = GridLayout.spec(0);
             GridLayout.Spec columnSpec = GridLayout.spec(0);
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(cellWidth, cellHeight));
             lp.rowSpec = rowSpec;
             lp.columnSpec = columnSpec;
+
             ImageView image = new ImageView(getActivity().getApplicationContext());
             image.setImageBitmap(bitmap);
             gridLayout.addView(image, lp);
@@ -212,6 +216,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             lp.rowSpec = rowSpec;
             lp.columnSpec = columnSpec;
+
             ImageView image = new ImageView(getActivity().getApplicationContext());
             image.setImageDrawable(placeHolderDrawable);
             gridLayout.addView(image, lp);
@@ -224,7 +229,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
     }
 
     /**
-     * 加载方形图片
+     * 加载方形图片,优化
      */
     private class SquareBitmapTarget implements Target {
 
@@ -236,6 +241,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             this.gridLayout = gridLayout;
             imageIndex = index;
         }
+
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
             int columnCount = gridLayout.getColumnCount();
@@ -246,6 +252,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             lp.setMargins(10, 10, 10, 10);
             lp.rowSpec = rowSpec;
             lp.columnSpec = columnSpec;
+
             SquareImageView image = new SquareImageView(getActivity().getApplicationContext());
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             image.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -255,7 +262,20 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
 
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
+            int columnCount = gridLayout.getColumnCount();
+            GridLayout.Spec rowSpec = GridLayout.spec(imageIndex / columnCount);
+            GridLayout.Spec columnSpec = GridLayout.spec(imageIndex % columnCount);
+            int cellSize = Utils.dp2px(getActivity().getApplicationContext(), 100.0f);
+            GridLayout.LayoutParams lp = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(cellSize, cellSize));
+            lp.setMargins(10, 10, 10, 10);
+            lp.rowSpec = rowSpec;
+            lp.columnSpec = columnSpec;
 
+            SquareImageView image = new SquareImageView(getActivity().getApplicationContext());
+            image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            image.setImageDrawable(placeHolderDrawable);
+            gridLayout.addView(image, lp);
         }
 
         @Override

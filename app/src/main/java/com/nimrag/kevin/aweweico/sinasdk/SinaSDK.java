@@ -1,6 +1,6 @@
 package com.nimrag.kevin.aweweico.sinasdk;
 
-import com.nimrag.kevin.aweweico.AppContext;
+import com.nimrag.kevin.aweweico.App;
 import com.nimrag.kevin.aweweico.sinasdk.bean.UserInfo;
 import com.nimrag.kevin.aweweico.lib.DefaultHttpUtility;
 import com.nimrag.kevin.aweweico.lib.HttpConfig;
@@ -27,10 +27,16 @@ public class SinaSDK {
         return httpUtility.doPost(new HttpConfig(), "https://api.weibo.com/oauth2/access_token", urlParams, null, null, UserInfo.class);
     }
 
-    public FriendsTimeLine getFriendsTimeLine() {
-        Params urlParams = new Params();
-        urlParams.addParam("access_token", AppContext.getUserInfo().getAccessToken());
+    /**
+     * params必须包含access_token
+     * 可选参数：
+     *     since_id
+     *     max_id
+     */
+    public FriendsTimeLine getFriendsTimeLine(Params params) {
+        //Params urlParams = new Params();
+        //urlParams.addParam("access_token", App.getUserInfo().getAccessToken());
         IHttpUtility httpUtility = new DefaultHttpUtility();
-        return httpUtility.doGet(new HttpConfig(), "https://api.weibo.com/2/statuses/friends_timeline.json", urlParams, FriendsTimeLine.class);
+        return httpUtility.doGet(new HttpConfig(), "https://api.weibo.com/2/statuses/friends_timeline.json", params, FriendsTimeLine.class);
     }
 }

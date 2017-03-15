@@ -82,6 +82,11 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         if (mHasHeader && mHasFooter) {
             return mDatas.size() + 2;

@@ -8,7 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.nimrag.kevin.aweweico.AppContext;
+import com.nimrag.kevin.aweweico.App;
 import com.nimrag.kevin.aweweico.R;
 import com.nimrag.kevin.aweweico.sinasdk.bean.UserInfo;
 
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
 
     public void onLoginResult(boolean success, UserInfo info) {
         if (success) {
-            AppContext.setUserInfo(info, getApplicationContext());
+            App.setUserInfo(info);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();

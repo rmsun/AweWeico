@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.nimrag.kevin.aweweico.AppContext;
 import com.nimrag.kevin.aweweico.R;
 
 /**
@@ -22,16 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
 
         setContentView(R.layout.activity_splash);
-        AppContext.setContext(getApplicationContext());
         userInfoPreference = getSharedPreferences("UserInfo", Activity.MODE_PRIVATE);
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-               startActivity(intent);
-               finish();
-            }
-        }, 2000);*/
     }
 
     @Override
