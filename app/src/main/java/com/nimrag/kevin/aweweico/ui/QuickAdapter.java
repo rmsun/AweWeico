@@ -68,6 +68,7 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
+        Log.d("haha", "onBindViewHolder position " + position);
         if(position == 0 && mHasHeader) {
             return;
         } else if (position == getItemCount() - 1 && mHasFooter) {
@@ -81,10 +82,10 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
         }
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    //@Override
+    //public long getItemId(int position) {
+        //return position;
+    //}
 
     @Override
     public int getItemCount() {

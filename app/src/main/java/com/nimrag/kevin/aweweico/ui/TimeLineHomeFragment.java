@@ -88,7 +88,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             }
         };
 
-        mAdapter.setHasStableIds(true);
+        //mAdapter.setHasStableIds(true);
         mAdapter.setHasFooter(true);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycleView.setAdapter(mAdapter);
@@ -126,8 +126,11 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             for (int i = 0; i < status.size(); i++) {
                 tempList.add(status.get(i));
             }
-            for (int i = 0; i < statusContent.size(); i++) {
-                tempList.add(statusContent.get(i));
+            // 如果小于20条数据，直接add front，如果大于等于20条就直接替换
+            if (status.size() < 20) {
+                for (int i = 0; i < statusContent.size(); i++) {
+                    tempList.add(statusContent.get(i));
+                }
             }
             statusContent.clear();
             statusContent.addAll(tempList);
