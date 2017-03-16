@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.nimrag.kevin.aweweico.lib.GlobalContext;
+import com.nimrag.kevin.aweweico.lib.orm.SqliteUtilityBuilder;
 import com.nimrag.kevin.aweweico.sinasdk.bean.UserInfo;
 
 import okhttp3.OkHttpClient;
@@ -15,6 +16,8 @@ import okhttp3.OkHttpClient;
  */
 
 public class App extends GlobalContext {
+
+    private static final int dbVersion = 1;
     private static UserInfo mUserInfo;
 
     /**
@@ -51,5 +54,12 @@ public class App extends GlobalContext {
         editor.putString("remind_in", userInfo.getRemindIn());
         editor.putInt("expires_in", userInfo.getExpiresIn());
         editor.commit();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // 建数据库
+        new SqliteUtilityBuilder().configDbName("weiboDB").configVersion(dbVersion).build(this);
     }
 }

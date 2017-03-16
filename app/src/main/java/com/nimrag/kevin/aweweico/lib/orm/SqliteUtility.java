@@ -159,7 +159,7 @@ public class SqliteUtility {
 
     public <T> void insert(Extra extra, List<T> entityList) {
         try {
-            insert(extra, entityList, "INSERT OR IGNORE INTO");
+            insert(extra, entityList, "INSERT OR IGNORE INTO ");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,7 +168,7 @@ public class SqliteUtility {
     public <T> void insertOrReplace(Extra extra, T... entities) {
         try {
             if (entities != null && entities.length > 0) {
-                insert(extra, Arrays.asList(entities), "INSERT OR REPLACE INTO");
+                insert(extra, Arrays.asList(entities), "INSERT OR REPLACE INTO ");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,7 +177,7 @@ public class SqliteUtility {
 
     public <T> void insertOrReplace(Extra extra, List<T> entityList) {
         try {
-            insert(extra, entityList, "INSERT OR REPLACE INTO");
+            insert(extra, entityList, "INSERT OR REPLACE INTO ");
         } catch (Exception e) {
             e.printStackTrace();
         }

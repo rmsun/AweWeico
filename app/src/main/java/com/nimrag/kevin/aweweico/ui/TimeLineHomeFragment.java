@@ -126,7 +126,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             for (int i = 0; i < status.size(); i++) {
                 tempList.add(status.get(i));
             }
-            // 如果小于20条数据，直接add front，如果大于等于20条就直接替换
+            // 如果小于20条数据，直接push back，如果大于等于20条就直接替换
             if (status.size() < 20) {
                 for (int i = 0; i < statusContent.size(); i++) {
                     tempList.add(statusContent.get(i));

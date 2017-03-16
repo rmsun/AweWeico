@@ -73,7 +73,7 @@ public class TableInfoUtils {
                     // 检查是否有新加字段
                     List<String> newFieldList = new ArrayList<String>();
                     for (String property : propertyList) {
-                        if (tableInfo.getPrimaryKey().equals(property)) {
+                        if (tableInfo.getPrimaryKey().getColumnName().equals(property)) {
                             continue;
                         }
                         boolean isNew = true;
