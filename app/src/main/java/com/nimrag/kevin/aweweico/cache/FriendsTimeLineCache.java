@@ -16,12 +16,20 @@ public class FriendsTimeLineCache implements ICache{
 
     private static FriendsTimeLineCache intance;
 
+    /**
+     * 懒汉模式,双重检测,保证线程安全
+     */
     public static  FriendsTimeLineCache getInstance() {
         if (intance == null) {
-            intance = new FriendsTimeLineCache();
+            synchronized(FriendsTimeLineCache.class) {
+                if (intance == null) {
+                    intance = new FriendsTimeLineCache();
+                }
+            }
         }
         return intance;
     }
+
     private static final String key = "statuses/public_timeline";
     @Override
     public IResult getData() {
