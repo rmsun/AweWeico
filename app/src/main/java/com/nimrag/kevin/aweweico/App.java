@@ -23,8 +23,8 @@ public class App extends GlobalContext {
     /**
      * since_id max_id分别用于更新、加载更多
      */
-    private static long sinceId;
-    private static long maxId;
+    private static long sinceId = 0;
+    private static long maxId = 0;
 
     public static long getSinceId() {return sinceId;}
     public static void setSinceId(long id) {sinceId = id;}

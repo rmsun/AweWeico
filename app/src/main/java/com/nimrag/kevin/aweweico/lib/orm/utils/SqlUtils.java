@@ -146,7 +146,7 @@ public class SqlUtils {
         List<String> argList = new ArrayList<String>();
         if (extra != null) {
             if (!TextUtils.isEmpty(extra.getOwner())) {
-                argList.add(extra.getKey());
+                argList.add(extra.getOwner());
             }
             if (!TextUtils.isEmpty(extra.getKey())) {
                 argList.add(extra.getKey());

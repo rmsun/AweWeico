@@ -70,12 +70,14 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             public void convert(VH holder, FriendsTimeLine.StatusesBean status, int position) {
                 ImageView imageView = holder.getView(R.id.profile_image);
                 TextView screenName = holder.getView(R.id.screen_name);
+                TextView publishDate = holder.getView(R.id.publish_date);
                 TextView editText = holder.getView(R.id.weibo_content);
                 GridLayout imageGridLayout = holder.getView(R.id.image_grid_layout);
 
                 // 加载图片
                 Picasso.with(getActivity().getApplicationContext()).load(status.getUser().getProfile_image_url()).transform(new CircleImageTransformation()).resize(150, 150).into(imageView);
                 screenName.setText(status.getUser().getScreen_name());
+                publishDate.setText(Utils.convertTime(status.getCreated_at()));
                 editText.setText(status.getText());
                 /**
                  * 不同数量的图片对应不同的列数
@@ -92,6 +94,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         mAdapter.setHasFooter(true);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycleView.setAdapter(mAdapter);
+        //mRecycleView.addItemDecoration(new DividerDecoration(getActivity(), DividerDecoration.VERTICAL_LIST));
         mSwipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.fragment_home_pager);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
@@ -102,9 +105,17 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 }
             }
         });
-        mSwipeRefreshLayout.setRefreshing(true);
+        //mSwipeRefreshLayout.setRefreshing(true);
+        //mTimeLinePresenter.refreshData();
+        // 加载数据
         mTimeLinePresenter.refreshData();
         return rootView;
+    }
+
+    @Override
+    public void startRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mTimeLinePresenter.refreshData();
     }
 
     @Override

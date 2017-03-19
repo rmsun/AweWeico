@@ -426,7 +426,7 @@ public class SqliteUtility {
                 field.set(entity, cursor.getDouble(cursor.getColumnIndex(column.getColumnName())));
             } else if (field.getType().getName().equals("boolean") ||
                     field.getType().getName().equals("java.lang.Boolean")) {
-                field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumnName())));
+                field.set(entity, Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(column.getColumnName()))));
             } else if (field.getType().getName().equals("char") ||
                     field.getType().getName().equals("java.lang.Character")) {
                 field.set(entity, cursor.getString(cursor.getColumnIndex(column.getColumnName())));

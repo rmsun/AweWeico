@@ -6,6 +6,6 @@ package com.nimrag.kevin.aweweico.lib;
  */
 
 public interface ICache {
-    IResult getData();
-    void setData(IResult result);
+    IResult getData(Params urlParams);
+    void setData(IResult result, Params urlParams);
 }

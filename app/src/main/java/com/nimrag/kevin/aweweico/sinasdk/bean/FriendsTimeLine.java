@@ -26,6 +26,8 @@ public class FriendsTimeLine implements IResult{
     private long max_id;
     private List<StatusesBean> statuses;
     private List<AdBean> ad;
+    private boolean outOfDate = false;
+    private boolean fromCache = false;
 
     public int getTotal_number() {
         return total_number;
@@ -567,11 +569,14 @@ public class FriendsTimeLine implements IResult{
 
     @Override
     public boolean outOfDate() {
-        return false;
+        return outOfDate;
     }
 
     @Override
     public boolean fromCache() {
-        return false;
+        return fromCache;
     }
+
+    public void setOutOfDate(boolean v) { this.outOfDate = v; }
+    public void setFromCache(boolean v) { this.fromCache = v; }
 }

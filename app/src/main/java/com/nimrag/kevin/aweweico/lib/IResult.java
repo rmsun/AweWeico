@@ -7,7 +7,7 @@ package com.nimrag.kevin.aweweico.lib;
 
 public interface IResult {
     /**
-     * 是否失效
+     * 是否失效标志,写入数据时记录写入时间，取出时根据刷新间隔来判断是否有效
      */
     boolean outOfDate();
     /**
