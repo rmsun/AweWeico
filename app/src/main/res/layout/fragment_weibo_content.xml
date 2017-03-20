@@ -46,4 +46,11 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/profile_image"/>
 
+    <include layout="@layout/weibo_content_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_grid_layout"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/profile_image"/>
+
 </RelativeLayout>

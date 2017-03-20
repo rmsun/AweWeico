@@ -81,20 +81,48 @@ public class FriendsTimeLine implements IResult{
          * user : {"id":1404376560,"screen_name":"zaku","name":"zaku","province":"11","city":"5","location":"北京 朝阳区","description":"人生五十年，乃如梦如幻；有生斯有死，壮士复何憾。","url":"http://blog.sina.com.cn/zaku","profile_image_url":"http://tp1.sinaimg.cn/1404376560/50/0/1","domain":"zaku","gender":"m","followers_count":1204,"friends_count":447,"statuses_count":2908,"favourites_count":0,"created_at":"Fri Aug 28 00:00:00 +0800 2009","following":false,"allow_all_act_msg":false,"remark":"","geo_enabled":true,"verified":false,"allow_all_comment":true,"avatar_large":"http://tp1.sinaimg.cn/1404376560/180/0/1","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":215}
          */
 
+        /**
+         * 创建时间
+         */
         private String created_at;
+        /**
+         * 微博id
+         */
         @PrimaryKey(column = "id")
         private long id;
+        /**
+         * 微博内容
+         */
         private String text;
+        /**
+         * 微博来源
+         */
         private String source;
+        /**
+         * 是否已收藏
+         */
         private boolean favorited;
+        /**
+         * 是否被截断
+         */
         private boolean truncated;
         private String in_reply_to_status_id;
         private String in_reply_to_user_id;
         private String in_reply_to_screen_name;
         private Object geo;
         private String mid;
+        /**
+         * 转发数量
+         */
         private int reposts_count;
+        /**
+         * 评论数量
+         */
         private int comments_count;
+        /**
+         * 表态数量
+         */
+        private int attitudes_count;
         /**
          * 缩略图
          */
@@ -220,6 +248,10 @@ public class FriendsTimeLine implements IResult{
         public void setComments_count(int comments_count) {
             this.comments_count = comments_count;
         }
+
+        public int getAttitudes_count() { return attitudes_count; }
+
+        public void setAttitudes_count(int attitudes_count) { this.attitudes_count = attitudes_count; }
 
         public String getThumbnail_pic() {return thumbnail_pic;}
 

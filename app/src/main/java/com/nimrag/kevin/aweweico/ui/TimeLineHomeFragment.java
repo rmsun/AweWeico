@@ -73,12 +73,38 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 TextView publishDate = holder.getView(R.id.publish_date);
                 TextView editText = holder.getView(R.id.weibo_content);
                 GridLayout imageGridLayout = holder.getView(R.id.image_grid_layout);
+                TextView source = holder.getView(R.id.weibo_source);
+                ImageView attitudeImage = holder.getView(R.id.attitude);
+                TextView attitudeCount = holder.getView(R.id.attitude_count);
+                ImageView repostImage = holder.getView(R.id.reposts);
+                TextView repostCount = holder.getView(R.id.reposts_count);
+                ImageView commentImage = holder.getView(R.id.comment);
+                TextView commentCount = holder.getView(R.id.comment_count);
 
-                // 加载图片
+                // 加载头像
                 Picasso.with(getActivity().getApplicationContext()).load(status.getUser().getProfile_image_url()).transform(new CircleImageTransformation()).resize(150, 150).into(imageView);
                 screenName.setText(status.getUser().getScreen_name());
                 publishDate.setText(Utils.convertTime(status.getCreated_at()));
                 editText.setText(status.getText());
+                source.setText(status.getSource());
+                if (status.getAttitudes_count() == 0) {
+                    attitudeImage.setVisibility(View.GONE);
+                    attitudeCount.setVisibility(View.GONE);
+                } else {
+                    attitudeCount.setText(String.valueOf(status.getAttitudes_count()));
+                }
+                if (status.getReposts_count() == 0) {
+                    repostImage.setVisibility(View.GONE);
+                    repostCount.setVisibility(View.GONE);
+                } else {
+                    repostCount.setText(String.valueOf(status.getReposts_count()));
+                }
+                if (status.getComments_count() == 0) {
+                    commentImage.setVisibility(View.GONE);
+                    commentCount.setVisibility(View.GONE);
+                } else {
+                    commentCount.setText(String.valueOf(status.getComments_count()));
+                }
                 /**
                  * 不同数量的图片对应不同的列数
                  * 1张图片,一行一列,保持图片的宽高比例
