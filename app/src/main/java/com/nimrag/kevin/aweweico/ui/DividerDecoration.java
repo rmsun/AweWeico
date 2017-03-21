@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nimrag.kevin.aweweico.R;
+import com.nimrag.kevin.aweweico.lib.Utils;
 
 /**
  * Created by kevin on 2017/3/19.
@@ -53,7 +54,6 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             //final View screenName = ((ViewGroup)child).findViewById(R.id.screen_name);
-            //left += screenName.getWidth();
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)child.getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
             final int bottom = top + divider.getIntrinsicHeight();

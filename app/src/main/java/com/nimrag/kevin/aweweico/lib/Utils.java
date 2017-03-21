@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by kevin on 2017/3/14.
@@ -97,5 +99,19 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 解析html超链接中的文本
+     */
+    public static String parseHtmlATag(String href) {
+        String linkText = null;
+        Pattern pattern = Pattern.compile("(>.+<)");
+        Matcher matcher = pattern.matcher(href);
+        if (matcher.find()) {
+            String temp = matcher.group(1);
+            linkText = temp.substring(1, temp.length() - 2);
+        }
+        return linkText;
     }
 }

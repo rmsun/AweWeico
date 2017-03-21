@@ -25,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/publish_date"
-        android:text="08:00"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/text_size_12sp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/screen_name"/>
 

@@ -86,7 +86,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 screenName.setText(status.getUser().getScreen_name());
                 publishDate.setText(Utils.convertTime(status.getCreated_at()));
                 editText.setText(status.getText());
-                source.setText(status.getSource());
+                source.setText(Utils.parseHtmlATag(status.getSource()));
                 if (status.getAttitudes_count() == 0) {
                     attitudeImage.setVisibility(View.GONE);
                     attitudeCount.setVisibility(View.GONE);
@@ -120,7 +120,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         mAdapter.setHasFooter(true);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycleView.setAdapter(mAdapter);
-        //mRecycleView.addItemDecoration(new DividerDecoration(getActivity(), DividerDecoration.VERTICAL_LIST));
+        mRecycleView.addItemDecoration(new DividerDecoration(getActivity(), DividerDecoration.VERTICAL_LIST));
         mSwipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.fragment_home_pager);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
