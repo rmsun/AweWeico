@@ -26,6 +26,7 @@ public class CacheTimeUtils {
         long saveTime = getSaveTime(key);
 
         // cache过期时间先设为15min
+        long currentTime = System.currentTimeMillis() / 1000;
         boolean expired = Math.abs((System.currentTimeMillis() / 1000 - saveTime) * 1000) >= 15 * 60 * 1000;
         return expired;
     }

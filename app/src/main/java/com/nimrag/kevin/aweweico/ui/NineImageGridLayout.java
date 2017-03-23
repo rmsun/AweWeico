@@ -40,13 +40,17 @@ public class NineImageGridLayout extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int childCount = getChildCount();
+        if (childCount == 0) {
+            setMeasuredDimension(0, 0);
+            return;
+        }
         int height = heightMeasureSpec;
         int size = 0;
 
         if (childCount == 1) {
             // 测量子view的宽高
             measureChild(getChildAt(0), widthMeasureSpec, heightMeasureSpec);
-            height = getChildAt(0).getHeight();
+            height = getChildAt(0).getMeasuredHeight() * 4;
         } else if (childCount == 2) {
             height = Utils.dp2px(getContext(), 120.0f);
             size = Utils.dp2px(getContext(), 120.0f);
@@ -64,7 +68,7 @@ public class NineImageGridLayout extends ViewGroup {
         // 设置子view的宽高相同
         if (size != 0) {
             for (int i = 0; i < childCount; i++) {
-                measureChild(getChildAt(i), size, size);
+                measureChild(getChildAt(i), widthMeasureSpec, heightMeasureSpec);
             }
         }
 
@@ -82,34 +86,54 @@ public class NineImageGridLayout extends ViewGroup {
         int top = 0;
         int right = 0;
         int bottom = 0;
+        /**
+         * 子view的宽高
+         */
+        int width = 0;
+        int height = 0;
 
         switch (childCount) {
             case 1:
-                left = l;
-                top = t;
-                right = left + getChildAt(0).getWidth();
-                bottom = top + getChildAt(0).getHeight();
+                //left = l;
+                //top = t;
+                right = left + getChildAt(0).getMeasuredWidth() * 4;
+                bottom = top + getChildAt(0).getMeasuredHeight() * 4;
                 getChildAt(0).layout(left, top, right, bottom);
                 break;
             case 2:
-            case 4:
+                width = Utils.dp2px(getContext(), 120.0f);
+                height = width;
                 for (int i = 0; i < childCount; i++){
                     View child = getChildAt(i);
-                    left = l + (child.getWidth() + (int) padding) * (i % 2);
-                    top = t + (child.getHeight() + (int) padding) * (i / 2);
-                    right = left + child.getWidth();
-                    bottom = top + child.getHeight();
+                    left = (width + (int) padding) * (i % 2);
+                    top = 0;
+                    right = left + width;
+                    bottom = top + height;
+                    child.layout(left, top, right, bottom);
+                }
+                break;
+            case 4:
+                width = Utils.dp2px(getContext(), 100.0f);
+                height = width;
+                for (int i = 0; i < childCount; i++){
+                    View child = getChildAt(i);
+                    left = (width + (int) padding) * (i % 2);
+                    top = (height + (int) padding) * (i / 2);
+                    right = left + width;
+                    bottom = top + height;
                     child.layout(left, top, right, bottom);
                 }
                 break;
             // 3,5,6,7,8,9
             default:
-                for (int i = 0; i < childCount; i++) {
+                width = Utils.dp2px(getContext(), 100.0f);
+                height = width;
+                for (int i = 0; i < childCount && i < 9; i++) {
                     View child = getChildAt(i);
-                    left = l + (child.getWidth() + (int) padding) * (i % 3);
-                    top = t + (child.getHeight() + (int) padding) * (i / 3);
-                    right = left + child.getWidth();
-                    bottom = top + child.getHeight();
+                    left = (width + (int) padding) * (i % 3);
+                    top = (height + (int) padding) * (i / 3);
+                    right = left + width;
+                    bottom = top + height;
                     child.layout(left, top, right, bottom);
                 }
         }

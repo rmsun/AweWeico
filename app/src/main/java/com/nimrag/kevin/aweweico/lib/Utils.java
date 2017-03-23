@@ -110,7 +110,7 @@ public class Utils {
         Matcher matcher = pattern.matcher(href);
         if (matcher.find()) {
             String temp = matcher.group(1);
-            linkText = temp.substring(1, temp.length() - 2);
+            linkText = temp.substring(1, temp.length() - 1);
         }
         return linkText;
     }

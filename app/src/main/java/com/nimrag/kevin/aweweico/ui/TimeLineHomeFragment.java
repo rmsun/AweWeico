@@ -53,6 +53,18 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 mTimeLinePresenter.loadMoreData();
             }
         });
+        mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                final Picasso picasso = Picasso.with(getContext());
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    picasso.resumeTag(getContext());
+                } else {
+                    picasso.pauseTag(getContext());
+                }
+            }
+        });
 
         statusContent = new ArrayList<FriendsTimeLine.StatusesBean>();
         mAdapter = new QuickAdapter<FriendsTimeLine.StatusesBean>(statusContent) {
@@ -72,7 +84,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 TextView screenName = holder.getView(R.id.screen_name);
                 TextView publishDate = holder.getView(R.id.publish_date);
                 TextView editText = holder.getView(R.id.weibo_content);
-                GridLayout imageGridLayout = holder.getView(R.id.image_grid_layout);
+                NineImageGridLayout imageGridLayout = holder.getView(R.id.image_grid_layout);
                 TextView source = holder.getView(R.id.weibo_source);
                 ImageView attitudeImage = holder.getView(R.id.attitude);
                 TextView attitudeCount = holder.getView(R.id.attitude_count);
@@ -82,7 +94,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 TextView commentCount = holder.getView(R.id.comment_count);
 
                 // 加载头像
-                Picasso.with(getActivity().getApplicationContext()).load(status.getUser().getProfile_image_url()).transform(new CircleImageTransformation()).resize(150, 150).into(imageView);
+                Picasso.with(getContext()).load(status.getUser().getProfile_image_url()).transform(new CircleImageTransformation()).resize(150, 150).into(imageView);
                 screenName.setText(status.getUser().getScreen_name());
                 publishDate.setText(Utils.convertTime(status.getCreated_at()));
                 editText.setText(status.getText());
@@ -112,7 +124,14 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                  * 3/5/6/7/8/9 三列
                  * 优化:自定义控件实现，移动网络下使用缩略图，wifi下使用中图
                  */
+                imageGridLayout.removeAllViews();
                 loadTimeLineImage(imageGridLayout, status.getPic_urls());
+                /*imageGridLayout.removeAllViews();
+                for (int i = 0; i < 1; i++) {
+                    ImageView image = new ImageView(getContext());
+                    image.setImageResource(R.drawable.place_holder);
+                    imageGridLayout.addView(image);
+                }*/
             }
         };
 
@@ -190,7 +209,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
      * @param gridLayout
      * @param picUrls
      */
-    private void loadTimeLineImage(GridLayout gridLayout, List<FriendsTimeLine.picUrlsBean> picUrls) {
+    private void loadTimeLineImage(NineImageGridLayout gridLayout, List<FriendsTimeLine.picUrlsBean> picUrls) {
 
         gridLayout.removeAllViews();
         // 图片张数
@@ -201,7 +220,7 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
         }
 
         // 图片为1张时，保持原图的宽高比
-        if (imageSize == 1) {
+        /*if (imageSize == 1) {
             NormalBitmapTarget target = new NormalBitmapTarget(gridLayout);
             Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(0).getThumbnail_pic()).placeholder(R.drawable.place_holder).into(target);
         } else if (imageSize == 2 || imageSize ==4) {
@@ -216,6 +235,13 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 SquareBitmapTarget target = new SquareBitmapTarget(gridLayout, i);
                 Picasso.with(getActivity().getApplicationContext()).load(picUrls.get(i).getThumbnail_pic()).placeholder(R.drawable.place_holder).into(target);
             }
+        }*/
+        for (int i = 0; i < imageSize; i++) {
+            NormalBitmapTarget target = new NormalBitmapTarget(gridLayout, i);
+            ImageView image = new ImageView(getContext());
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            gridLayout.addView(image, i);
+            Picasso.with(getContext()).load(picUrls.get(i).getThumbnail_pic()).placeholder(R.drawable.place_holder).into(image);
         }
     }
 
@@ -224,16 +250,18 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
      */
     private class NormalBitmapTarget implements Target {
 
-        private GridLayout gridLayout;
+        private NineImageGridLayout gridLayout;
+        private int imageIndex;
 
-        public NormalBitmapTarget(GridLayout gridLayout) {
+        public NormalBitmapTarget(NineImageGridLayout gridLayout, int index) {
             super();
             this.gridLayout = gridLayout;
+            imageIndex = index;
         }
 
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            int width = bitmap.getWidth();
+            /*int width = bitmap.getWidth();
             int height = bitmap.getHeight();
             int cellWidth = (int)Math.round(width * 4);
             int cellHeight = (int)Math.round(height * 4);
@@ -242,24 +270,25 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
             GridLayout.Spec columnSpec = GridLayout.spec(0);
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(cellWidth, cellHeight));
             lp.rowSpec = rowSpec;
-            lp.columnSpec = columnSpec;
+            lp.columnSpec = columnSpec;*/
 
             ImageView image = new ImageView(getActivity().getApplicationContext());
             image.setImageBitmap(bitmap);
-            gridLayout.addView(image, lp);
+            gridLayout.removeViewAt(imageIndex);
+            gridLayout.addView(image, imageIndex);
         }
 
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
-            GridLayout.Spec rowSpec = GridLayout.spec(0);
+            /*GridLayout.Spec rowSpec = GridLayout.spec(0);
             GridLayout.Spec columnSpec = GridLayout.spec(0);
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             lp.rowSpec = rowSpec;
-            lp.columnSpec = columnSpec;
+            lp.columnSpec = columnSpec;*/
 
             ImageView image = new ImageView(getActivity().getApplicationContext());
             image.setImageDrawable(placeHolderDrawable);
-            gridLayout.addView(image, lp);
+            gridLayout.addView(image, imageIndex);
         }
 
         @Override

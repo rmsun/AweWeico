@@ -39,9 +39,9 @@
         android:layout_toEndOf="@id/profile_image"
         android:autoLink="web"/>
 
-    <android.support.v7.widget.GridLayout
+    <com.nimrag.kevin.aweweico.ui.NineImageGridLayout
         android:id="@+id/image_grid_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/weibo_content"
         android:layout_marginStart="10dp"
