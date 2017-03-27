@@ -1,6 +1,10 @@
 package com.nimrag.kevin.aweweico.cache;
 
+import android.content.SharedPreferences;
+
 import com.nimrag.kevin.aweweico.App;
+import com.nimrag.kevin.aweweico.lib.ActivitySharePrefHelper;
+import com.nimrag.kevin.aweweico.lib.GlobalContext;
 import com.nimrag.kevin.aweweico.lib.ICache;
 import com.nimrag.kevin.aweweico.lib.IResult;
 import com.nimrag.kevin.aweweico.lib.Params;
@@ -48,6 +52,8 @@ public class FriendsTimeLineCache implements ICache{
             statusContents.setStatuses(statuses);
             statusContents.setFromCache(true);
             statusContents.setOutOfDate(CacheTimeUtils.outOfDate(key));
+            statusContents.setSince_id(Long.valueOf(ActivitySharePrefHelper.getShareData(GlobalContext.getGlobalContext(), "since_id")));
+            statusContents.setMax_id(Long.valueOf(ActivitySharePrefHelper.getShareData(GlobalContext.getGlobalContext(), "max_id")));
         }
         return statusContents;
     }
@@ -74,6 +80,14 @@ public class FriendsTimeLineCache implements ICache{
         }
         SqliteUtility.getInstance("weiboDB").insert(extra, ((FriendsTimeLine)result).getStatuses());
         CacheTimeUtils.saveTime(key);
+        // save since_id和max_id
+        long sinceId = timeLineData.getSince_id();
+        if (sinceId != 0) {
+            ActivitySharePrefHelper.putShareData(GlobalContext.getGlobalContext(), "since_id", String.valueOf(sinceId));
+        }
+        if (timeLineData.getStatuses().size() != 0) {
+            ActivitySharePrefHelper.putShareData(GlobalContext.getGlobalContext(), "max_id", String.valueOf(timeLineData.getStatuses().get(timeLineData.getStatuses().size() - 1).getId()));
+        }
     }
 
     // 缓存过期，删除数据库中的数据

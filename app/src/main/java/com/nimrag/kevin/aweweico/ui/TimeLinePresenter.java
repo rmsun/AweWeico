@@ -56,6 +56,8 @@ public class TimeLinePresenter implements ITimeLinePresenter {
             if (friendsTimeLine != null) {
                 // 过期重新刷新数据
                 if (friendsTimeLine.fromCache() && friendsTimeLine.outOfDate()) {
+                    // 先显示缓存的数据，然后再加载
+                    mTimeLineView.onRefreshData(friendsTimeLine);
                     FriendsTimeLineCache.getInstance().removeData();
                     mTimeLineView.startRefresh();
                     //LoadDataTask task = new LoadDataTask();

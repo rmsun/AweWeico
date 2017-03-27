@@ -2,6 +2,7 @@ package com.nimrag.kevin.aweweico.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -137,5 +138,18 @@ public class NineImageGridLayout extends ViewGroup {
                     child.layout(left, top, right, bottom);
                 }
         }
+    }
+
+    /**
+     * 拦截touch event
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
     }
 }
