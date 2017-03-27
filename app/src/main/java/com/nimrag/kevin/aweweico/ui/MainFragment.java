@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.nimrag.kevin.aweweico.R;
 
@@ -20,6 +21,7 @@ public class MainFragment extends Fragment {
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+    TextView screenName;
     private static final int NUM_PAGES = 1;
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
