@@ -1,12 +1,17 @@
 package com.nimrag.kevin.aweweico.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nimrag.kevin.aweweico.lib.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kevin on 2017/3/21.
@@ -16,6 +21,7 @@ import com.nimrag.kevin.aweweico.lib.Utils;
 public class NineImageGridLayout extends ViewGroup {
 
     private static final float padding = 5.0f;
+    private ArrayList<String> largImageUrls = new ArrayList<String>();
 
     public NineImageGridLayout(Context context) {
         this(context, null, 0);
@@ -27,6 +33,10 @@ public class NineImageGridLayout extends ViewGroup {
 
     public NineImageGridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void setLargImageUrls(ArrayList<String> urls) {
+        largImageUrls = urls;
     }
 
     /**
@@ -95,8 +105,6 @@ public class NineImageGridLayout extends ViewGroup {
 
         switch (childCount) {
             case 1:
-                //left = l;
-                //top = t;
                 right = left + getChildAt(0).getMeasuredWidth() * 4;
                 bottom = top + getChildAt(0).getMeasuredHeight() * 4;
                 getChildAt(0).layout(left, top, right, bottom);
@@ -150,6 +158,31 @@ public class NineImageGridLayout extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+        //return super.onTouchEvent(event);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_UP:
+                // 开启activity，展示大图。通过坐标判断点击子view的index
+                int touchIndex = 0;
+                int x = Math.round(event.getX());
+                int y = Math.round(event.getY());
+                for (int i = 0; i < getChildCount(); i++) {
+                    View child = getChildAt(i);
+                    if (x > child.getLeft() && x < child.getRight() && y > child.getTop() && y < child.getBottom()) {
+                        //touch is within this child
+                        touchIndex = i;
+                    }
+                }
+                Log.d("haha", "largeImageUrls: " + largImageUrls + "touchIndex: " + touchIndex);
+                Intent intent = new Intent(getContext().getApplicationContext(), PhotoViewActivity.class);
+                intent.putExtra("imageUrls", largImageUrls);
+                intent.putExtra("initIndex", touchIndex);
+                getContext().getApplicationContext().startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }
