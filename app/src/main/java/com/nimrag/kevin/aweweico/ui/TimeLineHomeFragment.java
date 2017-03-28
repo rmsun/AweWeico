@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nimrag.kevin.aweweico.R;
@@ -92,6 +93,39 @@ public class TimeLineHomeFragment extends Fragment implements ITimeLineView {
                 TextView repostCount = holder.getView(R.id.reposts_count);
                 ImageView commentImage = holder.getView(R.id.comment);
                 TextView commentCount = holder.getView(R.id.comment_count);
+                LinearLayout retweetLayout = holder.getView(R.id.retweet_layout);
+                TextView retweetText = holder.getView(R.id.retweet_text);
+                NineImageGridLayout retweetImageLayout = holder.getView(R.id.retweet_image);
+                LinearLayout weiboContentBottomLayout = holder.getView(R.id.weibo_content_bottom);
+
+                // 9图会改变padding，所以设置了背景之后，重新设置padding
+                retweetLayout.setBackgroundResource(R.drawable.timeline_rt_border);
+                int padding = Utils.dp2px(getActivity().getApplicationContext(), 10.0f);
+                retweetLayout.setPadding(padding, padding, padding, padding);
+
+                // weibo_content_bottom的layoutParams
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMarginStart(Utils.dp2px(getActivity().getApplicationContext(), 10.0f));
+                layoutParams.addRule(RelativeLayout.END_OF, R.id.profile_image);
+
+                // 是否为转发微博
+                if (status.getRetweeted_status() == null) {
+                    retweetLayout.setVisibility(View.GONE);
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.image_grid_layout);
+                } else {
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.retweet_layout);
+                    retweetText.setText(status.getRetweeted_status().getText());
+                    retweetImageLayout.removeAllViews();
+                    loadTimeLineImage(retweetImageLayout, status.getRetweeted_status().getPic_urls());
+                    ArrayList<String> largeImageUrls = new ArrayList<String>();
+                    for (int i = 0; i < status.getRetweeted_status().getPic_urls().size(); i++) {
+                        String thumbnailUrl = status.getRetweeted_status().getPic_urls().get(i).getThumbnail_pic();
+                        String largeImageUrl = thumbnailUrl.replace("thumbnail", "large");
+                        largeImageUrls.add(largeImageUrl);
+                    }
+                    retweetImageLayout.setLargImageUrls(largeImageUrls);
+                }
+                weiboContentBottomLayout.setLayoutParams(layoutParams);
 
                 // 加载头像
                 Picasso picasso = Picasso.with(getContext());

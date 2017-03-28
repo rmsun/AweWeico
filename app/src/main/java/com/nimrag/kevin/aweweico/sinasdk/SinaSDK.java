@@ -40,4 +40,14 @@ public class SinaSDK extends BizLogic{
         IHttpUtility httpUtility = new DefaultHttpUtility();
         return doGet(new HttpConfig(), "https://api.weibo.com/2/statuses/friends_timeline.json", params, FriendsTimeLine.class);
     }
+
+    /**
+     * 获取用户信息
+     */
+    public FriendsTimeLine.StatusesBean.UserBean getUserDetailInfo() {
+        Params urlParams = new Params();
+        urlParams.addParam("access_token", App.getUserInfo().getAccessToken());
+        urlParams.addParam("uid", App.getUserInfo().getUid());
+        return doGet(new HttpConfig(), "https://api.weibo.com/2/users/show.json", urlParams, FriendsTimeLine.StatusesBean.UserBean.class);
+    }
 }

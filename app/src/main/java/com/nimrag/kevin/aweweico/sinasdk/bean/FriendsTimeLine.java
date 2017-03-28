@@ -145,6 +145,11 @@ public class FriendsTimeLine implements IResult{
 
         private UserBean user;
 
+        /**
+         * 转发的微博，如果是原创微博，则没有此字段
+         */
+        private StatusesBean retweeted_status;
+
         public String getCreated_at() {
             return created_at;
         }
@@ -278,6 +283,10 @@ public class FriendsTimeLine implements IResult{
         public void setUser(UserBean user) {
             this.user = user;
         }
+
+        public StatusesBean getRetweeted_status() { return retweeted_status; }
+
+        public void setRetweeted_status(StatusesBean statuses) { this.retweeted_status = statuses; }
 
         public static class UserBean {
             /**

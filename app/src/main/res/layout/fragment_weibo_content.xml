@@ -47,11 +47,33 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/profile_image"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weibo_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/profile_image"
+        android:orientation="vertical"
+        android:id="@+id/retweet_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retweet_text"/>
+
+        <com.nimrag.kevin.aweweico.ui.NineImageGridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/retweet_image"/>
+
+    </LinearLayout>
+
     <include layout="@layout/weibo_content_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/image_grid_layout"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/profile_image"/>
+        android:layout_toEndOf="@id/profile_image"
+        android:id="@+id/weibo_content_bottom"/>
 
 </RelativeLayout>

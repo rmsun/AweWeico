@@ -26,6 +26,8 @@ public abstract class BizLogic implements IHttpUtility {
                     FriendsTimeLineCache.getInstance().setData((IResult)result, urlParams);
                 }
             }
+        } else if (url.toLowerCase().contains("users/show")) {
+            result = getHttpUtility().doGet(config, url, urlParams, responseCls);
         }
         return result;
     }
