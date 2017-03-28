@@ -10,4 +10,12 @@
 
     </android.support.v4.view.ViewPager>
 
+    <com.nimrag.kevin.aweweico.ui.DotViewIndicator
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dot_indicator"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp">
+    </com.nimrag.kevin.aweweico.ui.DotViewIndicator>
+
 </FrameLayout>

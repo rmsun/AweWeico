@@ -27,6 +27,7 @@ public class PhotoViewActivity extends FragmentActivity {
     private ArrayList<String> imageUrls;
     private int initIndex;
     ViewPager viewPager;
+    DotViewIndicator indicator;
 
     private class PhotoSlidePagerAdapter extends FragmentStatePagerAdapter {
 
@@ -57,9 +58,32 @@ public class PhotoViewActivity extends FragmentActivity {
             }
             Log.d("haha", "initIndex: " + initIndex);
         }
+
         setContentView(R.layout.phote_view_layout);
         viewPager = (ViewPager)findViewById(R.id.photo_view_pager);
         viewPager.setAdapter(new PhotoSlidePagerAdapter(getSupportFragmentManager()));
         viewPager.setCurrentItem(initIndex);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                indicator.setCurrentIndex(position);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        indicator = (DotViewIndicator)findViewById(R.id.dot_indicator);
+        if (imageUrls.size() > 1) {
+            indicator.setDotNumbers(imageUrls.size());
+            indicator.setCurrentIndex(initIndex);
+        }
     }
 }
