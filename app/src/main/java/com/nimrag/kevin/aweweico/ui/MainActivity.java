@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.nimrag.kevin.aweweico.R;
+import com.nimrag.kevin.aweweico.lib.ActivitySharePrefHelper;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         slideLayout = (FrameLayout)findViewById(R.id.container_fragment_list);
         View view = getLayoutInflater().inflate(R.layout.slide_fragment_layout, slideLayout, true);
+        ImageView profileImage = (ImageView) view.findViewById(R.id.current_avatar);
+        String profileImageUrl = ActivitySharePrefHelper.getShareData(getApplicationContext(), "user_profile_image_url");
+        if(!profileImageUrl.isEmpty()) {
+            Picasso.with(getApplicationContext()).load(profileImageUrl).into(profileImage);
+        }
         // 获取桌面背景作为slide fragment的背景
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();

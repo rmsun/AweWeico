@@ -16,6 +16,7 @@ import com.nimrag.kevin.aweweico.R;
 import com.nimrag.kevin.aweweico.lib.ActivitySharePrefHelper;
 import com.nimrag.kevin.aweweico.sinasdk.SinaSDK;
 import com.nimrag.kevin.aweweico.sinasdk.bean.FriendsTimeLine;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by kevin on 2017/2/14.
@@ -82,6 +83,7 @@ public class MainFragment extends Fragment {
             if (userDetailInfo != null) {
                 userScreenName.setText(userDetailInfo.getScreen_name());
                 ActivitySharePrefHelper.putShareData(getActivity().getApplicationContext(), "user_nick", userDetailInfo.getScreen_name());
+                ActivitySharePrefHelper.putShareData(getActivity().getApplicationContext(), "user_profile_image_url", userDetailInfo.getAvatar_large());
             }
         }
     }
