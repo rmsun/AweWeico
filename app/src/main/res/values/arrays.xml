@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="comment_more_options1">
+        <item>Copy comment</item>
+        <item>Reply comment</item>
+    </string-array>
+    <string-array name="comment_more_options2">
+        <item>Copy comment</item>
+        <item>Reply comment</item>
+        <item>Delete comment</item>
+    </string-array>
+    <string-array name="dm_more_options">
+        <item>To blacklist</item>
+        <item>Clear conversation</item>
+    </string-array>
+    <string-array name="dm_more_options2">
+        <item>Copy DM</item>
+        <item>Delete DM</item>
+    </string-array>
+    <string-array name="fixed_group_names">
+        <item>All</item>
+        <item>Original</item>
+        <item>Friends</item>
+        <item>SpecialAttention</item>
+        <item>Celebrities</item>
+        <item>WorkMate</item>
+        <item>SchoolMate</item>
+        <item>Fans</item>
+        <item>Enterprise</item>
+    </string-array>
+    <string-array name="image_upload_quality">
+        <item>Small</item>
+        <item>Middle</item>
+        <item>Large</item>
+        <item>Original</item>
+    </string-array>
+    <string-array name="index_more_options">
+        <item>Moods</item>
+        <item>Themes</item>
+        <item>Read Env</item>
+        <item>Accounts</item>
+        <item>Settings</item>
+    </string-array>
+    <string-array name="notify_settings">
+        <item>\@Me</item>
+        <item>Comments</item>
+        <item>DM</item>
+        <item>New Follow</item>
+    </string-array>
+    <string-array name="search_history_action">
+        <item>delete</item>
+        <item>delete all</item>
+    </string-array>
+    <string-array name="time_line_image_type">
+        <item>None</item>
+        <item>Small</item>
+        <item>Large</item>
+    </string-array>
+    <string-array name="video_options">
+        <item>Jump to browser</item>
+        <item>Close media player</item>
+    </string-array>
+    <string-array name="webview_choose_item">
+        <item>Default browser</item>
+        <item>Weico browser</item>
+        <item>System browser</item>
+    </string-array>
+    <string-array name="discovery_hot_groups">
+        <item>Hot Weibo</item>
+        <item>Hot Topic</item>
+    </string-array>
+    <string-array name="pre_loading_options">
+        <item>Always</item>
+        <item>Wi-Fi Only</item>
+    </string-array>
+    <string-array name="reading_style_options">
+        <item>Normal</item>
+        <item>Reverse</item>
+    </string-array>
+    <string-array name="area_list_string">
+        <item>中国,0086</item>
+        <item>香港地区,00852</item>
+        <item>台湾地区,00886</item>
+        <item>澳门地区,00853</item>
+        <item>澳大利亚,0061</item>
+        <item>巴西,0055</item>
+        <item>德国,0049</item>
+        <item>俄罗斯,007</item>
+        <item>法国,0033</item>
+        <item>韩国,0082</item>
+        <item>加拿大,001</item>
+        <item>马来西亚,0060</item>
+        <item>美国,001</item>
+        <item>日本,0081</item>
+        <item>泰国,0066</item>
+        <item>新加坡,0065</item>
+        <item>英国,0044</item>
+        <item>印度,0091</item>
+    </string-array>
+    <string-array name="expression_lxh">
+        <item>[笑哈哈]</item>
+        <item>[好爱哦]</item>
+        <item>[噢耶]</item>
+        <item>[偷乐]</item>
+        <item>[泪流满面]</item>
+        <item>[巨汗]</item>
+        <item>[抠鼻屎]</item>
+        <item>[求关注]</item>
+        <item>[好喜欢]</item>
+        <item>[崩溃]</item>
+        <item>[好囧]</item>
+        <item>[震惊]</item>
+        <item>[别烦我]</item>
+        <item>[不好意思]</item>
+        <item>[羞嗒嗒]</item>
+        <item>[得意地笑]</item>
+        <item>[纠结]</item>
+        <item>[给劲]</item>
+        <item>[悲催]</item>
+        <item>[甩甩手]</item>
+        <item>[好棒]</item>
+        <item>[瞧瞧]</item>
+        <item>[不想上班]</item>
+        <item>[困死了]</item>
+        <item>[许愿]</item>
+        <item>[丘比特]</item>
+        <item>[有鸭梨]</item>
+        <item>[想一想]</item>
+        <item>[躁狂症]</item>
+        <item>[转发]</item>
+        <item>[互相膜拜]</item>
+        <item>[雷锋]</item>
+        <item>[杰克逊]</item>
+        <item>[玫瑰]</item>
+        <item>[hold住]</item>
+        <item>[群体围观]</item>
+        <item>[推荐]</item>
+        <item>[赞啊]</item>
+        <item>[被电]</item>
+        <item>[霹雳]</item>
+    </string-array>
+    <string-array name="expression_name">
+        <item>→_→</item>
+        <item>[哆啦A梦微笑]</item>
+        <item>[哆啦A梦花心]</item>
+        <item>[哆啦A梦吃惊]</item>
+        <item>[喵喵]</item>
+        <item>[doge]</item>
+        <item>[给力]</item>
+        <item>[神马]</item>
+        <item>[浮云]</item>
+        <item>[威武]</item>
+        <item>[围观]</item>
+        <item>[抱抱]</item>
+        <item>[摊手]</item>
+        <item>[二哈]</item>
+        <item>[坏笑]</item>
+        <item>[骷髅]</item>
+        <item>[懒得理你]</item>
+        <item>[浪]</item>
+        <item>[神兽]</item>
+        <item>[舔屏]</item>
+        <item>[污]</item>
+        <item>[熊猫]</item>
+        <item>[NO]</item>
+        <item>[加油]</item>
+        <item>[作揖]</item>
+        <item>[微笑]</item>
+        <item>[嘻嘻]</item>
+        <item>[哈哈]</item>
+        <item>[爱你]</item>
+        <item>[晕]</item>
+        <item>[泪]</item>
+        <item>[挖鼻]</item>
+        <item>[抓狂]</item>
+        <item>[哼]</item>
+        <item>[酷]</item>
+        <item>[偷笑]</item>
+        <item>[可爱]</item>
+        <item>[怒]</item>
+        <item>[汗]</item>
+        <item>[害羞]</item>
+        <item>[睡]</item>
+        <item>[钱]</item>
+        <item>[衰]</item>
+        <item>[吃惊]</item>
+        <item>[闭嘴]</item>
+        <item>[鄙视]</item>
+        <item>[馋嘴]</item>
+        <item>[色]</item>
+        <item>[鼓掌]</item>
+        <item>[悲伤]</item>
+        <item>[思考]</item>
+        <item>[生病]</item>
+        <item>[亲亲]</item>
+        <item>[怒骂]</item>
+        <item>[太开心]</item>
+        <item>[白眼]</item>
+        <item>[右哼哼]</item>
+        <item>[左哼哼]</item>
+        <item>[嘘]</item>
+        <item>[委屈]</item>
+        <item>[吐]</item>
+        <item>[可怜]</item>
+        <item>[哈欠]</item>
+        <item>[挤眼]</item>
+        <item>[失望]</item>
+        <item>[顶]</item>
+        <item>[疑问]</item>
+        <item>[困]</item>
+        <item>[感冒]</item>
+        <item>[拜拜]</item>
+        <item>[黑线]</item>
+        <item>[阴险]</item>
+        <item>[笑cry]</item>
+        <item>[打脸]</item>
+        <item>[傻眼]</item>
+        <item>[互粉]</item>
+        <item>[男孩儿]</item>
+        <item>[女孩儿]</item>
+        <item>[奥特曼]</item>
+        <item>[猪头]</item>
+        <item>[兔子]</item>
+        <item>[熊猫]</item>
+        <item>[草泥马]</item>
+        <item>[握手]</item>
+        <item>[耶]</item>
+        <item>[good]</item>
+        <item>[弱]</item>
+        <item>[ok]</item>
+        <item>[赞]</item>
+        <item>[来]</item>
+        <item>[haha]</item>
+        <item>[月亮]</item>
+        <item>[太阳]</item>
+        <item>[微风]</item>
+        <item>[沙尘暴]</item>
+        <item>[下雨]</item>
+        <item>[雪]</item>
+        <item>[雪人]</item>
+        <item>[落叶]</item>
+        <item>[鲜花]</item>
+        <item>[心]</item>
+        <item>[伤心]</item>
+        <item>[萌]</item>
+        <item>[囧]</item>
+        <item>[织]</item>
+        <item>[喜]</item>
+        <item>[围脖]</item>
+        <item>[手套]</item>
+        <item>[绿丝带]</item>
+        <item>[蛋糕]</item>
+        <item>[咖啡]</item>
+        <item>[西瓜]</item>
+        <item>[冰棍]</item>
+        <item>[干杯]</item>
+        <item>[蜡烛]</item>
+        <item>[发红包]</item>
+        <item>[飞机]</item>
+        <item>[自行车]</item>
+        <item>[礼物]</item>
+        <item>[照相机]</item>
+        <item>[风扇]</item>
+        <item>[话筒]</item>
+        <item>[钟]</item>
+        <item>[足球]</item>
+        <item>[电影]</item>
+        <item>[音乐]</item>
+        <item>[肥皂]</item>
+        <item>[炸鸡啤酒]</item>
+        <item>[小章鱼]</item>
+    </string-array>
+    <string-array name="number_status_perPage">
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="xz_country_codes">
+        <item>-</item>
+        <item>AR</item>
+        <item>AU</item>
+        <item>BR</item>
+        <item>BG</item>
+        <item>CA</item>
+        <item>CN</item>
+        <item>CZ</item>
+        <item>DE</item>
+        <item>DK</item>
+        <item>ES</item>
+        <item>FI</item>
+        <item>FR</item>
+        <item>GB</item>
+        <item>GR</item>
+        <item>HU</item>
+        <item>ID</item>
+        <item>IT</item>
+        <item>JP</item>
+        <item>KR</item>
+        <item>NL</item>
+        <item>PL</item>
+        <item>PT</item>
+        <item>RU</item>
+        <item>SE</item>
+        <item>SK</item>
+        <item>SI</item>
+        <item>TR</item>
+        <item>TW</item>
+        <item>US</item>
+    </string-array>
+</resources>

@@ -7,7 +7,17 @@
         <ImageView android:id="@id/current_avatar_indicator" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:src="@drawable/compose_account_switch_arrow" android:layout_toRightOf="@id/current_avatar" android:layout_centerVertical="true" />
         <TextView android:textSize="15.0sp" android:gravity="center" android:id="@id/total_new_msg_notice" android:background="@drawable/number_notify" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="20" android:layout_toRightOf="@id/current_avatar_indicator" android:layout_centerVertical="true" />
     </RelativeLayout>
-    <ListView android:id="@id/index_left_listview" android:scrollbars="none" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="30.0dip" android:cacheColorHint="#00000000" android:divider="@null" android:dividerHeight="0.0dip" android:layout_above="@id/slide_left_setting_layout" android:layout_below="@id/currenta_avatar_layout" />
+    <ListView
+        android:id="@id/index_left_listview"
+        android:scrollbars="none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30.0dip"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:dividerHeight="0.0dip"
+        android:layout_above="@id/slide_left_setting_layout"
+        android:layout_below="@id/currenta_avatar_layout" />
     <LinearLayout android:orientation="horizontal" android:id="@id/slide_left_setting_layout" android:paddingLeft="8.0dip" android:paddingRight="8.0dip" android:paddingBottom="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
         <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/slide_left_setting_offline" style="@style/SlideBarTextStyle">
             <ImageView android:id="@id/sidebar_icon_offline_button" android:background="@drawable/sidebar_left_toolbar_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/sidebar_icon_offline" />

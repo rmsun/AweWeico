@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="comment_more_options1">
+        <item>复制评论</item>
+        <item>回复评论</item>
+    </string-array>
+    <string-array name="comment_more_options2">
+        <item>复制评论</item>
+        <item>回复评论</item>
+        <item>删除评论</item>
+    </string-array>
+    <string-array name="dm_more_options">
+        <item>踢进黑名单</item>
+        <item>清除对话</item>
+    </string-array>
+    <string-array name="dm_more_options2">
+        <item>复制私信</item>
+        <item>删除私信</item>
+    </string-array>
+    <string-array name="fixed_group_names">
+        <item>全部</item>
+        <item>原创微博</item>
+        <item>好友圈</item>
+        <item>特别关注</item>
+        <item>名人明星</item>
+        <item>同事</item>
+        <item>同学</item>
+        <item>粉丝</item>
+        <item>企业</item>
+    </string-array>
+    <string-array name="image_upload_quality">
+        <item>小图</item>
+        <item>中图</item>
+        <item>大图</item>
+        <item>原图</item>
+    </string-array>
+    <string-array name="index_more_options">
+        <item>心情微博</item>
+        <item>主题</item>
+        <item>阅读环境</item>
+        <item>帐号管理</item>
+        <item>设置</item>
+    </string-array>
+    <string-array name="notify_settings">
+        <item>\@我</item>
+        <item>评论</item>
+        <item>私信</item>
+        <item>粉丝</item>
+    </string-array>
+    <string-array name="search_history_action">
+        <item>删除</item>
+        <item>全部删除</item>
+    </string-array>
+    <string-array name="time_line_image_type">
+        <item>无图</item>
+        <item>小图</item>
+        <item>大图</item>
+    </string-array>
+    <string-array name="video_options">
+        <item>跳转到浏览器</item>
+        <item>关闭媒体播放</item>
+    </string-array>
+    <string-array name="webview_choose_item">
+        <item>默认浏览器</item>
+        <item>内置浏览器</item>
+        <item>系统浏览器</item>
+    </string-array>
+    <string-array name="discovery_hot_groups">
+        <item>热门微博</item>
+        <item>热门话题</item>
+    </string-array>
+    <string-array name="pre_loading_options">
+        <item>总是</item>
+        <item>仅 Wi-Fi</item>
+    </string-array>
+    <string-array name="reading_style_options">
+        <item>顺序</item>
+        <item>逆序</item>
+    </string-array>
+</resources>
